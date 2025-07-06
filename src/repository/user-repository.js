@@ -26,6 +26,18 @@ class UserRepository{
             throw error;       
         }
      }
+
+     async getUserById(userId){
+        try {
+            const user = await User.findByPk(userId);
+            return user;      
+        } catch (error) {
+            console.error("Error fetching user by ID:", error);
+            throw error;       
+        }
+     }
+
+     
 }
 
 module.exports = {
