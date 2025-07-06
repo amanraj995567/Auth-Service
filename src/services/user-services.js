@@ -64,6 +64,28 @@ class UserService {
         }
     }
 
+    async isAuthenticated(token){
+        try {
+            const isTokenVerified = this.verifyToken(token);
+            if(!isTokenVerified){
+                throw {error:'Invalid token'}
+            }
+
+            const user = this.userRepository.getById(isTokenVerified.id);
+
+            if(!user){
+                throw {error:'No user with corrosponding token exist'}
+            }
+
+            return user.id
+     
+        } catch (error) {
+            console.error("Error in UserService while auth process:", error);
+            throw error; 
+            
+        }
+    }
+
 
     verifyToken(token){
         try {

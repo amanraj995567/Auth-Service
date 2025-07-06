@@ -14,5 +14,7 @@ router.post(
     AuthRequestValidators.validateUserAuth,
     UserConroller.signIn);
 
+router.get('/isAuthenticated',UserConroller.isAuthenticated)
+
 module.exports = router;
 
