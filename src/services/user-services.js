@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 
 
 class UserService {
+
     constructor(){
         this.userRepository = new UserRepository();
     }
@@ -35,6 +36,34 @@ class UserService {
         }
     }
 
+    async signIn(email,plainPassword){
+        try {
+
+            const user = await this.userRepository.getUserbyEmail(email);
+            const passwordMatch = this.checkPassword(plainPassword,user.password);
+            
+            if(!passwordMatch){
+                console.log("Password does not match");
+                throw {error: "Incorrect Password"};
+            }
+            
+            const newJWT = this .createToken({
+                id: user.id,
+                email: user.email
+            })
+
+
+            return newJWT;
+
+
+
+        } catch (error) {
+            console.error("Error in UserService while signing in:", error);
+            throw error; 
+            
+        }
+    }
+
 
     verifyToken(token){
         try {
@@ -48,10 +77,7 @@ class UserService {
 
     checkPassword(userPlainPassword, userHashedPassword){
         try {
-
-            return bcrypt.compareSync(userPlainPassword, userHashedPassword);
-            
-            
+            return bcrypt.compareSync(userPlainPassword, userHashedPassword);        
         } catch (error) {
             console.error("Error checking password:", error);
             throw error;  

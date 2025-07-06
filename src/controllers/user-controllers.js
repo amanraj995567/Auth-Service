@@ -16,12 +16,33 @@ const userService = new UserService();                   // Step 2
       console.error('Error in create user controller:', error);
       return res.status(500).json({
         success: false,
-        message: 'Something went wrong',
+        message: 'Something went wrong'
       });
+    }
+}
+
+const signIn = async (req,res)=>{
+    try {
+
+        const response = await userService.signIn(req.body.email, req.body.password);
+        return res.status(200).json({
+            success: true,
+            data: response,
+            message: 'Successfully signed in'
+        }) 
+        
+    } catch (error) {
+        console.error('Error in signIn controller:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Something went wrong in signIn controlller'
+        });
+        
     }
 }
 
 
 module.exports = {
-     create
+     create,
+     signIn
 }

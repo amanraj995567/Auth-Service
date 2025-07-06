@@ -1,3 +1,4 @@
+
 const {User} = require('../models/index');
 
 
@@ -37,7 +38,21 @@ class UserRepository{
         }
      }
 
-     
+     async getUserbyEmail(userEmail){
+        try {
+            const user = await User.findOne({
+                where:{
+                    email:userEmail
+                }
+            });
+            return user;      
+        } catch (error) {
+            console.error("Error fetching user by email:", error);
+            throw error;    
+        }
+     }
+
+
 }
 
 module.exports = {
