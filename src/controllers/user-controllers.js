@@ -3,7 +3,6 @@ const { response }    = require('express');
 const UserService = require('../services/user-services'); // Step 1
 const userService = new UserService();                   // Step 2
 
- 
  const  create =  async (req, res) => {
     try {
       const response = await userService.createUser(req.body); // using the instance
