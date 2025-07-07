@@ -71,7 +71,7 @@ class UserService {
                 throw {error:'Invalid token'}
             }
 
-            const user = this.userRepository.getById(isTokenVerified.id);
+            const user = await this.userRepository.getById(isTokenVerified.id);
 
             if(!user){
                 throw {error:'No user with corrosponding token exist'}
