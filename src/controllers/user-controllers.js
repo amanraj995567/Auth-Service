@@ -12,10 +12,12 @@ const userService = new UserService();                   // Step 2
         message: 'Successfully created user',
       });
     } catch (error) {
-      console.error('Error in create user controller:', error);
-      return res.status(500).json({
+      //console.error('Error in create user controller:', error);
+      return res.status(error.statusCode).json({
         success: false,
-        message: 'Something went wrong'
+        data:{},
+        message: error.message,
+        err:error.explanation
       });
     }
 }

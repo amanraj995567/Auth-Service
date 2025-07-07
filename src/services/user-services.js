@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const {UserRepository} = require('../repository/user-repository');
 const {JWT_KEY} = require('../config/serverConfig');
 const bcrypt = require('bcrypt');
+const AppErrors = require('../utils/error-handler');
 
 
 class UserService {
@@ -10,11 +11,14 @@ class UserService {
         this.userRepository = new UserRepository();
     }
 
-    async createUser(data){
+    async create(data){
         try {
             const user = await this.userRepository.create(data);
             return user;
         } catch (error) {
+            if(error.name == 'SequelizeValidationError'){
+                throw error;
+            }
             console.error("Error in UserService while creating user:", error);
             throw error;
         }
