@@ -16,5 +16,9 @@ router.post(
 
 router.get('/isAuthenticated',UserConroller.isAuthenticated)
 
+router.get('/isAdmin' ,
+    AuthRequestValidators.validateIsAdminRequest,
+     UserConroller.isAdmin);
+
 module.exports = router;
 
